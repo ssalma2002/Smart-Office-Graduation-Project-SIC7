@@ -12,7 +12,7 @@ if __name__ == "__main__":
     while True:
         x = int(input())
         import time
-        if time.time().hour < x:
+        if time.localtime().tm_hour < x:
             continue
         buzz_on()
         print("Buzzer is ON")
