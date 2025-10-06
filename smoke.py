@@ -1,13 +1,17 @@
-import botbook_mcp3002 as mcp
+import serial
 
-smokeLevel= 0
+# Serial Port and Speed Settings
+serial_port = '/dev/ttyACM0'  # 아두이노와 연결된 포트
+baud_rate = 9600
+
+# Serial Port Initialization
+arduino = serial.Serial(serial_port, baud_rate)
 
 def isFire() -> bool:
-    global smokeLevel
-    smokeLevel= mcp.readAnalog()
-    print(smokeLevel)
-    if smokeLevel > 120:
+    data = arduino.readline().decode().strip()
+    if data == "1":
         return True
+    return False
 
 def main():
     isFire()
