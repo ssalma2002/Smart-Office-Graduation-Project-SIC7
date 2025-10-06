@@ -9,9 +9,10 @@ def buzz_off():
     buzzer.off()
 
 if __name__ == "__main__":
-    buzz_on()
-    print("Buzzer is ON")
-    import time
-    time.sleep(2)
-    buzz_off()
-    print("Buzzer is OFF")
+    while True:
+        buzz_on()
+        print("Buzzer is ON")
+        import time
+        time.sleep(2)
+        buzz_off()
+        print("Buzzer is OFF")
