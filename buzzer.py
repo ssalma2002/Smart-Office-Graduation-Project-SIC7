@@ -1,6 +1,6 @@
 from gpiozero import Buzzer
 
-buzzer = Buzzer()
+buzzer = Buzzer(17)
 
 def buzz_on():
     buzzer.on()

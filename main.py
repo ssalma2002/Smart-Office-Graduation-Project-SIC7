@@ -30,6 +30,7 @@ async def fire():
 async def motion():
     if pir.motion_detected and ...:
         ...  # Add your logic here
+        buzz_on()
         await sleep(0)
 
 async def main():
