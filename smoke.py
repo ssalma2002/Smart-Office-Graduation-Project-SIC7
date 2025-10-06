@@ -5,6 +5,7 @@ smokeLevel= 0
 def isFire() -> bool:
     global smokeLevel
     smokeLevel= mcp.readAnalog()
+    print(smokeLevel)
     if smokeLevel > 120:
         return True
 
