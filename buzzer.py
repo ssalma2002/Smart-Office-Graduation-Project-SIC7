@@ -11,11 +11,11 @@ def buzz_off():
 if __name__ == "__main__":
     while True:
         x = int(input())
+        import time
         if time.time().hour < x:
             continue
         buzz_on()
         print("Buzzer is ON")
-        import time
         time.sleep(2)
         buzz_off()
         print("Buzzer is OFF")
