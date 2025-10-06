@@ -1,9 +1,14 @@
 from gpiozero import Buzzer
+import time
 
 buzzer = Buzzer(17)
 
 def buzz_on():
-    buzzer.on()
+    period = 1.0 / 2000
+    buzzer.frequency = 2000
+    buzzer.value = 0.5  # 50% duty cycle (medium volume)
+    time.sleep(0.2)
+    buzzer.off()
 
 def buzz_off():
     buzzer.off()
@@ -11,7 +16,6 @@ def buzz_off():
 if __name__ == "__main__":
     while True:
         x = int(input())
-        import time
         if time.localtime().tm_hour < x:
             continue
         buzz_on()
