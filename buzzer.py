@@ -6,8 +6,7 @@ buzzer = Buzzer(17)
 def buzz_on():
     period = 1.0 / 2000
     buzzer.frequency = 2000
-    buzzer.value = 0.5  # 50% duty cycle (medium volume)
-    time.sleep(0.2)
+    buzzer.value = 0.5 
     buzzer.off()
 
 def buzz_off():
