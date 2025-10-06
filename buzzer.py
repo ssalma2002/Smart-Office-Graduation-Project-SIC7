@@ -10,6 +10,8 @@ def buzz_off():
 
 if __name__ == "__main__":
     while True:
+        if time.time().hour < 18:
+            continue
         buzz_on()
         print("Buzzer is ON")
         import time

@@ -1,6 +1,6 @@
 from pir import pir
 from servo import entranceOpen, adminOpen
-from time import sleep
+from time import sleep, time
 from smoke import isFire
 from waterpump import waterPump
 from buzzer import buzz_on, buzz_off
@@ -28,7 +28,7 @@ async def fire():
         await sleep(0)
 
 async def motion():
-    if pir.motion_detected and ...:
+    if pir.motion_detected and time().hour >= 18:
         ...  # Add your logic here
         buzz_on()
         await sleep(0)
