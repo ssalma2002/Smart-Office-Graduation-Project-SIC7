@@ -1,11 +1,8 @@
 import adafruit_dht
 import board
 
-dhtDevice = adafruit_dht.DHT11(board.D4)
+dht = adafruit_dht.DHT11(board.D17)  # or DHT22
+temperature = dht.temperature
+humidity = dht.humidity
 
-try:
-    temperature = dhtDevice.temperature
-    humidity = dhtDevice.humidity
-    print(f"Temp={temperature}°C  Humidity={humidity}%")
-except RuntimeError as e:
-    print(e)
+print(f"Temp: {temperature}°C, Humidity: {humidity}%")
