@@ -1,7 +1,7 @@
 from gpiozero import Buzzer
 import time
 
-buzzer = Buzzer(17)
+buzzer = Buzzer(22)
 
 def buzz_on():
     period = 1.0 / 2000

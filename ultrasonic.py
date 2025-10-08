@@ -1,6 +1,6 @@
 from gpiozero import DistanceSensor
 
-sensor = DistanceSensor(echo=18, trigger=23)
+sensor = DistanceSensor(echo=24, trigger=23)
 
 def is_person_nearby():
     distance = sensor.distance * 100  # Convert to cm
