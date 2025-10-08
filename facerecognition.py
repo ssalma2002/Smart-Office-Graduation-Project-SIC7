@@ -9,6 +9,7 @@ recognized = False
 
 def on_message(message):
     global recognized
+    print(f"Received message: {message.payload.decode('utf-8')}")
     if str(message.payload.decode("utf-8")) == "1":
         recognized = True
     else:
