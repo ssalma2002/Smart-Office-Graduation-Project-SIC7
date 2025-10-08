@@ -8,7 +8,7 @@ from facerecognition import recognized
 from light import lightMain, lightAdmin
 from button import mainDoor, adminDoor
 from ultrasonic import is_person_nearby
-from nfc import mainNFC, adminNFC
+from nfc import mainNFC, adminNFC, nfcOn
 from pub import publisher
 import threading
 
@@ -66,6 +66,7 @@ def closeLights():
 def main():
     # Create threads for each task
     threads = [
+        threading.Thread(target=nfcOn, daemon=True),
         threading.Thread(target=openCamera, daemon=True),
         threading.Thread(target=entranceDoor, daemon=True),
         threading.Thread(target=adminDoor, daemon=True),
