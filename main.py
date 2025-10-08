@@ -15,7 +15,7 @@ import threading
 def openCamera():
     while True:
         if is_person_nearby():
-#            publisher.publish("office/cvOpen", "1")
+            publisher.publish("office/cvOpen", "1")
             nfcOn()
         sleep(1)
 
@@ -74,7 +74,7 @@ def main():
         threading.Thread(target=motion, daemon=True),
         threading.Thread(target=closeLights, daemon=True),
         threading.Thread(target=exitHandler, daemon=True),
-	threading.Thread(target=nfcOn, daemon=True)
+	    threading.Thread(target=nfcOn, daemon=True)
     ]
 
     # Start all threads
