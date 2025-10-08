@@ -7,10 +7,13 @@ def is_person_nearby():
     return distance < 50  # Threshold distance in cm
 
 if __name__ == "__main__":
+    from pub import publisher
     import time
     while True:
         if is_person_nearby():
             print("Person detected nearby!")
+            publisher.publish("office/cvOpen", "1")
         else:
             print("No one nearby.")
+            publisher.publish("office/cvOpen", "0")
         time.sleep(1)
