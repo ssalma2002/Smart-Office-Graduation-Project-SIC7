@@ -6,6 +6,7 @@ from waterPump import waterPump
 from buzzer import buzz_on, buzz_off
 from facerecognition import recognized
 from light import lightMain, lightAdmin
+from button import mainDoor, adminDoor
 
 async def entrance():
     if recognized and localtime().tm_hour < 15 and ...:
@@ -38,6 +39,15 @@ async def motion():
         entrance.max()
         admin.max()
         buzz_on()
+        await sleep(0)
+
+async def closeLights():
+    if mainDoor.is_pressed:
+        lightMain.off()
+        lightAdmin.off()
+        await sleep(0)
+    if adminDoor.is_pressed:
+        lightAdmin.off()
         await sleep(0)
 
 async def main():

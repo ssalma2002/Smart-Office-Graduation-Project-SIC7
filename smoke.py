@@ -1,7 +1,8 @@
 import serial
+from pub import publisher
 
 # Serial Port and Speed Settings
-serial_port = '/dev/ttyACM0'  # 아두이노와 연결된 포트
+serial_port = '/dev/ttyACM0' 
 baud_rate = 9600
 
 # Serial Port Initialization
@@ -9,7 +10,8 @@ arduino = serial.Serial(serial_port, baud_rate)
 
 def isFire() -> bool:
     data = arduino.readline().decode().strip()
-    if data == "1":
+    publisher.publish("office/smoke", int(data))
+    if data >= int("70"):
         return True
     return False
 
