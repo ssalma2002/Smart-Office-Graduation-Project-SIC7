@@ -14,6 +14,7 @@ if __name__ == "__main__":
                 print("Person detected nearby!")
             else:
                 print("No person nearby.")
+            time.sleep(1)
     
     threads = [
         threading.Thread(target=ultra, daemon=True),
