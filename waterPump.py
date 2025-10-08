@@ -1,14 +1,13 @@
-from gpiozero import OutputDevice
+from gpiozero import Motor
 from time import sleep
 
-waterPump = OutputDevice()
-
-
-def main():
-    while True:
-        waterPump.on()
-        sleep(1)
-        waterPump.off()
-
+# Define H-bridge control pins
+pump = Motor(forward=17, backward=18)
 if __name__ == "__main__":
-    main()
+    print("Pump ON")
+    pump.forward()   # Turns pump ON in one direction
+    sleep(5)
+
+    print("Pump OFF")
+    pump.stop()      # Stops pump
+

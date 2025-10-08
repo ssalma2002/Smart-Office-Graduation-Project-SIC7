@@ -2,7 +2,7 @@ from pir import pir
 from servo import *
 from time import sleep, localtime
 from smoke import isFire
-from waterPump import waterPump
+from waterPump import pump
 from buzzer import buzz_on, buzz_off
 from facerecognition import recognized
 from light import lightMain, lightAdmin
@@ -35,12 +35,12 @@ def adminDoor():
 def fire():
     while True:
         if isFire():
-            waterPump.on()
+            pump.forward()
             entrance.min()
             admin.min()
             buzz_on()
         else:
-            waterPump.off()
+            pump.stop()
             entrance.max()
             admin.max()
             buzz_off()
