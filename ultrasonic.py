@@ -10,8 +10,11 @@ if __name__ == "__main__":
     from pub import publisher
     import time
     while True:
+        import nfc
         if is_person_nearby():
             print("Person detected nearby!")
+            if nfc.mainNFC or nfc.adminNFC:
+                print("NFC authenticated user detected.")
             publisher.publish("office/cvOpen", "1")
         else:
             print("No one nearby.")
