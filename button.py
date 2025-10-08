@@ -2,7 +2,7 @@ from gpiozero import Button
 
 
 mainDoor = Button(27)
-#adminDoors = Button()
+adminDoors = Button(10)
 
 
 if __name__ == "__main__":

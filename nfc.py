@@ -40,5 +40,5 @@ def nfcOn():
                 mainNFC = True
         else:
             print("Access Denied")
-        sleep(1)
+        sleep(5)
 

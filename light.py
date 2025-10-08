@@ -1,9 +1,10 @@
-from gpiozero import OutputDevice
+from gpiozero import LED
 from time import sleep
 
-lightMain = OutputDevice()
-lightAdmin = OutputDevice()
-
+#lightMain = OutputDevice()
+#lightAdmin = OutputDevice()
+lightMain = LED()
+lightAdmin = LED()
 
 def main():
     while True:
