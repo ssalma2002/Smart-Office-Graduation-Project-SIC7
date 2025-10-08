@@ -16,6 +16,7 @@ def openCamera():
     while True:
         if is_person_nearby():
             publisher.publish("office/cvOpen", "1")
+            nfcOn()
         sleep(1)
 
 def entranceDoor():
@@ -66,7 +67,6 @@ def closeLights():
 def main():
     # Create threads for each task
     threads = [
-        threading.Thread(target=nfcOn, daemon=True),
         threading.Thread(target=openCamera, daemon=True),
         threading.Thread(target=entranceDoor, daemon=True),
         threading.Thread(target=adminDoor, daemon=True),

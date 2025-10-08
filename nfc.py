@@ -18,12 +18,9 @@ users = {
 mainNFC = False
 adminNFC = False
 
-def resetNFC():
-    global mainNFC, adminNFC
-    mainNFC = False
-    adminNFC = False
 
 def nfcOn():
+    global mainNFC, adminNFC
     while True:
         uid = pn532.read_passive_target(timeout=0.5)
         if uid is None:
@@ -43,6 +40,5 @@ def nfcOn():
                 mainNFC = True
         else:
             print("Access Denied")
-        resetNFC()
         sleep(1)
 
