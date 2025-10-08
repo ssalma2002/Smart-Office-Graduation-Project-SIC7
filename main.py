@@ -7,15 +7,24 @@ from buzzer import buzz_on, buzz_off
 from facerecognition import recognized
 from light import lightMain, lightAdmin
 from button import mainDoor, adminDoor
+from ultrasonic import is_person_nearby
+from nfc import mainNFC, adminNFC
+
+async def openCamera():
+    if is_person_nearby():
+        ...
+        await sleep(0)
+    else:
+        await sleep(0)
 
 async def entrance():
-    if recognized and localtime().tm_hour < 15 and ...:
+    if recognized and localtime().tm_hour < 15 and mainNFC:
         entranceOpen()
         lightMain.on()
         await sleep(0)
 
 async def admin():
-    if ... and localtime().tm_hour < 15:
+    if adminNFC and localtime().tm_hour < 15:
         adminOpen()
         lightAdmin.on()
         await sleep(0)

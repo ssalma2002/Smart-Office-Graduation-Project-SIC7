@@ -15,6 +15,9 @@ users = {
     '13 3C 56 34': {'name': 'Employee1', 'role': 'employee', 'id': 2001},
 }
 
+mainNFC = False
+adminNFC = False
+
 while True:
     uid = pn532.read_passive_target(timeout=0.5)
     if uid is None:
@@ -25,8 +28,14 @@ while True:
 
     if uid_str in users:
         user = users[uid_str]
-        print(f"Access granted to {user['name']} ({user['role']}) - ID: {user['id']}")
+        if user['role'] == 'admin':
+            print(f"Welcome Admin: {user['name']}")
+            adminNFC = True
+        else:
+            print(f"Welcome Employee: {user['name']}")
+            mainNFC = True
     else:
         print("Access Denied")
     
     sleep(1)
+
