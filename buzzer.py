@@ -1,14 +1,12 @@
-from gpiozero import Buzzer
+from gpiozero import PWMOutputDevice
 import time
 
-buzzer = Buzzer(17)
+buzzer = PWMOutputDevice(17)
 
 def buzz_on():
-    period = 1.0 / 2000
-    buzzer.frequency = 2000
+    period = 1.0 / 200
+    buzzer.frequency = 200
     buzzer.value = 0.5  # 50% duty cycle (medium volume)
-    time.sleep(0.2)
-    buzzer.off()
 
 def buzz_off():
     buzzer.off()
