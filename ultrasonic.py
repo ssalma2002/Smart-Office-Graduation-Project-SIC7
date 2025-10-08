@@ -2,7 +2,7 @@ from gpiozero import DistanceSensor
 
 sensor = DistanceSensor(echo=18, trigger=23)
 
-def is_person_nearby():
+async def is_person_nearby():
     distance = sensor.distance * 100  # Convert to cm
     return distance < 50  # Threshold distance in cm
 
@@ -13,7 +13,7 @@ if __name__ == "__main__":
         while True:
             import nfc
             await nfc.nfcOn()
-            if is_person_nearby():
+            if await is_person_nearby():
                 print("Person detected nearby!")
                 if nfc.mainNFC or nfc.adminNFC:
                     print("NFC authenticated user detected.")
