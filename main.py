@@ -2,28 +2,34 @@ from pir import pir
 from servo import *
 from time import sleep, localtime
 from smoke import isFire
-from waterpump import waterPump
+from waterPump import waterPump
 from buzzer import buzz_on, buzz_off
+from facerecognition import recognized
+from light import lightMain, lightAdmin
 
 async def entrance():
-    if ...:
+    if recognized and localtime().tm_hour < 15 and ...:
         entranceOpen()
-        ...
+        lightMain.on()
         await sleep(0)
 
 async def admin():
-    if ...:
+    if ... and localtime().tm_hour < 15:
         adminOpen()
-        ...
+        lightAdmin.on()
         await sleep(0)
 
 async def fire():
     if isFire():
         waterPump.on()
+        entrance.min()
+        admin.min()
         buzz_on()
         await sleep(0)
     else:
         waterPump.off()
+        entrance.max()
+        admin.max()
         buzz_off()
         await sleep(0)
 
