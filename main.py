@@ -44,13 +44,6 @@ def fire():
             buzz_off()
         sleep(1)
 
-def motion():
-    while True:
-        if pir.motion_detected and localtime().tm_hour >= 15:
-            entrance.max()
-            buzz_on()
-        sleep(1)
-
 def closeLights():
     while True:
         if mainDoor.is_pressed:
@@ -71,10 +64,9 @@ def main():
         threading.Thread(target=entranceDoor, daemon=True),
         threading.Thread(target=adminDoor, daemon=True),
         threading.Thread(target=fire, daemon=True),
-        threading.Thread(target=motion, daemon=True),
         threading.Thread(target=closeLights, daemon=True),
         threading.Thread(target=exitHandler, daemon=True),
-	    threading.Thread(target=nfcOn, daemon=True)
+        threading.Thread(target=nfcOn, daemon=True)
     ]
 
     # Start all threads
