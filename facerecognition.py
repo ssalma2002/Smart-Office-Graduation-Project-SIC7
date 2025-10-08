@@ -1,7 +1,7 @@
 from paho.mqtt.client import Client
 
 client = Client(client_id="raspberryPi")
-client.connect("...", 1883, 60)
+client.connect("localhost", 1883, 60)
 client.subscribe("office/face_recognition")
 client.loop_forever()
 
