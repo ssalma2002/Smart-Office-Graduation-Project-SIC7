@@ -13,10 +13,10 @@ if __name__ == "__main__":
         while True:
             if is_person_nearby():
                 print("Person detected nearby!")
-                publisher("office/cvOpen", "1")
+                publisher.publish("office/cvOpen", "1")
             else:
                 print("No person nearby.")
-                publisher("office/cvOpen", "0")
+                publisher.publish("office/cvOpen", "0")
             time.sleep(1)
     
     threads = [
