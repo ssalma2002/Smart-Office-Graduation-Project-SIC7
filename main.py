@@ -9,10 +9,11 @@ from light import lightMain, lightAdmin
 from button import mainDoor, adminDoor
 from ultrasonic import is_person_nearby
 from nfc import mainNFC, adminNFC
+from pub import publisher
 
 async def openCamera():
     if is_person_nearby():
-        ...
+        publisher.publish("office/cvOpen", "1")
         await sleep(0)
     else:
         await sleep(0)

@@ -1,4 +1,5 @@
 from paho.mqtt.client import Client
 
 publisher = Client(id="publisher")
-publisher.connect("broker.emqx.io", 1883)
+publisher.connect("10.178.13.231", 1883)
+publisher.loop_start()
