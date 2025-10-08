@@ -4,8 +4,8 @@ from time import sleep, localtime
 from smoke import isFire
 from waterPump import pump
 from buzzer import buzz_on, buzz_off
-#from facerecognition import recognized
-#from light import lightMain, lightAdmin
+import facerecognition
+from light import lightMain, lightAdmin
 from button import mainDoor, adminDoors
 from ultrasonic import is_person_nearby
 import nfc
@@ -20,31 +20,27 @@ def openCamera():
 
 def entranceDoor():
     while True:
-        print("hello4")
-        print(nfc.mainNFC)
-        print("hello3")
-        #if recognized or localtime().tm_hour < 15 or mainNFC:
-        if nfc.mainNFC:
+        if facerecognition.recognized or localtime().tm_hour < 15 or nfc.mainNFC:
             print("hello2")
             entranceOpen()
-#            lightMain.on()
+            lightMain.on()
         sleep(1)
 
 def adminDoor():
     while True:
         if nfc.adminNFC and localtime().tm_hour < 15:
-#            lightAdmin.on()
+            lightAdmin.on()
             sleep(1)
 
 def fire():
     while True:
         if isFire():
             pump.forward()
-#            entrance.min()
+            entrance.min()
             buzz_on()
             sleep(5)
             pump.stop()
-#            entrance.max()
+            entrance.max()
             buzz_off()
         sleep(1)
 
