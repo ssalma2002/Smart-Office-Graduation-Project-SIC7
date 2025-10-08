@@ -2,28 +2,18 @@ from gpiozero import DistanceSensor
 
 sensor = DistanceSensor(echo=18, trigger=23)
 
-async def is_person_nearby():
+def is_person_nearby():
     distance = sensor.distance * 100  # Convert to cm
     return distance < 50  # Threshold distance in cm
 
 if __name__ == "__main__":
-    import nfc
-    async def ultra():
-        from pub import publisher
-        import time
-        while True:
-            if await is_person_nearby():
-                print("Person detected nearby!")
-                if nfc.mainNFC or nfc.adminNFC:
-                    print("NFC authenticated user detected.")
-                publisher.publish("office/cvOpen", "1")
-            else:
-                print("No one nearby.")
-                publisher.publish("office/cvOpen", "0")
-            time.sleep(1)
-    import asyncio
-    async def main():
-        task1 = asyncio.create_task(nfc.nfcOn())
-        task2 = asyncio.create_task(ultra())
-        await asyncio.gather(task1, task2)
-    asyncio.run(main())
+    from pub import publisher
+    import time
+    while True:
+        if is_person_nearby():
+            print("Person detected nearby!")
+            publisher.publish("office/cvOpen", "1")
+        else:
+            print("No one nearby.")
+            publisher.publish("office/cvOpen", "0")
+        time.sleep(1)
