@@ -7,12 +7,11 @@ async def is_person_nearby():
     return distance < 50  # Threshold distance in cm
 
 if __name__ == "__main__":
-    async def main():
+    import nfc
+    async def ultra():
         from pub import publisher
         import time
         while True:
-            import nfc
-            await nfc.nfcOn()
             if await is_person_nearby():
                 print("Person detected nearby!")
                 if nfc.mainNFC or nfc.adminNFC:
@@ -23,4 +22,8 @@ if __name__ == "__main__":
                 publisher.publish("office/cvOpen", "0")
             time.sleep(1)
     import asyncio
+    async def main():
+        task1 = asyncio.create_task(nfc.nfcOn())
+        task2 = asyncio.create_task(ultra())
+        await asyncio.gather(task1, task2)
     asyncio.run(main())
