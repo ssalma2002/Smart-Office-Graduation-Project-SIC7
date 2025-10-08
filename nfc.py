@@ -24,7 +24,9 @@ def nfcOn():
     while True:
         uid = pn532.read_passive_target(timeout=0.5)
         if uid is None:
-            continue
+           mainNFC = False
+           adminNFC = False
+           continue
 
         uid_str = ' '.join([f'{i:02X}' for i in uid])
         print(f"Card detected with UID: {uid_str}")
@@ -39,6 +41,8 @@ def nfcOn():
                 print(f"Welcome Employee: {user['name']}")
                 mainNFC = True
         else:
+            mainNFC= False
+            adminNFC = False
             print("Access Denied")
-        sleep(5)
+        sleep(2)
 

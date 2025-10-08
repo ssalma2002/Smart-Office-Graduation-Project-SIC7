@@ -1,5 +1,5 @@
 #from pir import pir
-from servo import entrance
+from servo import entranceOpen, entrance
 from time import sleep, localtime
 from smoke import isFire
 from waterPump import pump
@@ -8,7 +8,7 @@ from buzzer import buzz_on, buzz_off
 #from light import lightMain, lightAdmin
 from button import mainDoor, adminDoors
 from ultrasonic import is_person_nearby
-from nfc import mainNFC, adminNFC, nfcOn
+import nfc
 from pub import publisher
 import threading
 
@@ -20,17 +20,21 @@ def openCamera():
 
 def entranceDoor():
     while True:
+        print("hello4")
+        print(nfc.mainNFC)
+        print("hello3")
         #if recognized or localtime().tm_hour < 15 or mainNFC:
-        if mainNFC:
-            entrance.max()
-            lightMain.on()
+        if nfc.mainNFC:
+            print("hello2")
+            entranceOpen()
+#            lightMain.on()
         sleep(1)
 
 def adminDoor():
     while True:
-        if adminNFC and localtime().tm_hour < 15:
-            lightAdmin.on()
-        sleep(1)
+        if nfc.adminNFC and localtime().tm_hour < 15:
+#            lightAdmin.on()
+            sleep(1)
 
 def fire():
     while True:
@@ -49,6 +53,11 @@ def exitHandler():
     mainDoor.when_pressed = lambda: lightMain.off(), lightAdmin.off()
 
 def main():
+    print("hello")
+    entrance.min()
+    sleep(3)
+    print("hello1")
+    entrance.max()
     # Create threads for each task
     threads = [
         threading.Thread(target=openCamera, daemon=True),
@@ -56,7 +65,7 @@ def main():
         threading.Thread(target=adminDoor, daemon=True),
         threading.Thread(target=fire, daemon=True),
         threading.Thread(target=exitHandler, daemon=True),
-        threading.Thread(target=nfcOn, daemon=True)
+        threading.Thread(target=nfc.nfcOn, daemon=True)
     ]
 
     # Start all threads

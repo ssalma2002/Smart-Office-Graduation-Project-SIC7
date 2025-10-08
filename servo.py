@@ -1,6 +1,6 @@
 from gpiozero import Servo
 from time import sleep
-
+#import os
 entrance = Servo(20)
 
 def entranceOpen():
@@ -8,10 +8,3 @@ def entranceOpen():
     sleep(2)
     entrance.max()
 
-def main():
-    while True:
-        entranceOpen()
-        sleep(2)
-
-if __name__ == "__main__":
-    main()
