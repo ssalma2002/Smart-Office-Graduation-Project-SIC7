@@ -6,7 +6,7 @@ from waterPump import pump
 from buzzer import buzz_on, buzz_off
 from facerecognition import recognized
 from light import lightMain, lightAdmin
-from button import mainDoor, adminDoor
+from button import mainDoor, adminDoors
 from ultrasonic import is_person_nearby
 from nfc import mainNFC, adminNFC, nfcOn
 from pub import publisher
@@ -29,7 +29,6 @@ def entranceDoor():
 def adminDoor():
     while True:
         if adminNFC and localtime().tm_hour < 15:
-            adminOpen()
             lightAdmin.on()
         sleep(1)
 
@@ -38,12 +37,10 @@ def fire():
         if isFire():
             pump.forward()
             entrance.min()
-            admin.min()
             buzz_on()
         else:
             pump.stop()
             entrance.max()
-            admin.max()
             buzz_off()
         sleep(1)
 
@@ -51,7 +48,6 @@ def motion():
     while True:
         if pir.motion_detected and localtime().tm_hour >= 15:
             entrance.max()
-            admin.max()
             buzz_on()
         sleep(1)
 
@@ -64,6 +60,10 @@ def closeLights():
             lightAdmin.off()
         sleep(1)
 
+def exitHandler():
+    adminDoors.when_pressed = lambda: lightAdmin.off()
+    mainDoor.when_pressed = lambda: lightMain.off(), lightAdmin.off()
+
 def main():
     # Create threads for each task
     threads = [
@@ -72,7 +72,8 @@ def main():
         threading.Thread(target=adminDoor, daemon=True),
         threading.Thread(target=fire, daemon=True),
         threading.Thread(target=motion, daemon=True),
-        threading.Thread(target=closeLights, daemon=True)
+        threading.Thread(target=closeLights, daemon=True),
+        threading.Thread(target=exitHandler, daemon=True)
     ]
     
     # Start all threads
