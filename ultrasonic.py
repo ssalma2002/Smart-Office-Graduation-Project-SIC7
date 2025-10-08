@@ -9,10 +9,11 @@ def is_person_nearby():
 if __name__ == "__main__":
     import nfc, threading, time
     def ultra():
-        if is_person_nearby():
-            print("Person detected nearby!")
-        else:
-            print("No person nearby.")
+        while True:
+            if is_person_nearby():
+                print("Person detected nearby!")
+            else:
+                print("No person nearby.")
     
     threads = [
         threading.Thread(target=ultra, daemon=True),
