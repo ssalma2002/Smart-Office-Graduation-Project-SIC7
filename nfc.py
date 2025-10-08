@@ -31,6 +31,7 @@ while True:
         if user['role'] == 'admin':
             print(f"Welcome Admin: {user['name']}")
             adminNFC = True
+            mainNFC = True
         else:
             print(f"Welcome Employee: {user['name']}")
             mainNFC = True
