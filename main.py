@@ -49,11 +49,6 @@ def exitHandler():
     mainDoor.when_pressed = lambda: lightMain.off(), lightAdmin.off()
 
 def main():
-    print("hello")
-    entrance.min()
-    sleep(3)
-    print("hello1")
-    entrance.max()
     # Create threads for each task
     threads = [
         threading.Thread(target=openCamera, daemon=True),
