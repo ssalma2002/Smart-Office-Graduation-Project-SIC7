@@ -1,4 +1,4 @@
-from pir import pir
+#from pir import pir
 from servo import *
 from time import sleep, localtime
 from smoke import isFire
@@ -15,13 +15,13 @@ import threading
 def openCamera():
     while True:
         if is_person_nearby():
-            publisher.publish("office/cvOpen", "1")
+#            publisher.publish("office/cvOpen", "1")
             nfcOn()
         sleep(1)
 
 def entranceDoor():
     while True:
-        if recognized and localtime().tm_hour < 15 and mainNFC:
+        if recognized or localtime().tm_hour < 15 or mainNFC:
             entranceOpen()
             lightMain.on()
         sleep(1)
@@ -73,13 +73,14 @@ def main():
         threading.Thread(target=fire, daemon=True),
         threading.Thread(target=motion, daemon=True),
         threading.Thread(target=closeLights, daemon=True),
-        threading.Thread(target=exitHandler, daemon=True)
+        threading.Thread(target=exitHandler, daemon=True),
+	threading.Thread(target=nfcOn, daemon=True)
     ]
-    
+
     # Start all threads
     for thread in threads:
         thread.start()
-    
+
     # Keep the main thread running
     while True:
         sleep(1)

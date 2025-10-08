@@ -34,7 +34,7 @@ def parse_line(line: str):
     return None
 
 
-def main():
+def isFire():
     while True:
         line = arduino.readline().decode(errors='ignore').strip()
         if not line:
@@ -48,13 +48,13 @@ def main():
         if parsed[0] == "DHT":
             _, temp, hum = parsed
             print(f"Temperature: {temp}°C, Humidity: {hum}%")
-            publisher.publish("office/temperature", temp)
-            publisher.publish("office/humidity", hum)
+            publisher.publish("temperatureIn", temp)
+            publisher.publish("humidity", hum)
 
         elif parsed[0] == "SMOKE":
             _, smoke = parsed
             print(f"Smoke Level: {smoke}")
-            publisher.publish("office/smoke", smoke)
+            publisher.publish("airquality", smoke)
             if smoke >= 70:
                 print("Fire alert!")
 
