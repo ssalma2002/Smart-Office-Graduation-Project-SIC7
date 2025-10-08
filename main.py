@@ -17,13 +17,13 @@ async def openCamera():
     else:
         await sleep(0)
 
-async def entrance():
+async def entranceDoor():
     if recognized and localtime().tm_hour < 15 and mainNFC:
         entranceOpen()
         lightMain.on()
         await sleep(0)
 
-async def admin():
+async def adminDoor():
     if adminNFC and localtime().tm_hour < 15:
         adminOpen()
         lightAdmin.on()
@@ -61,10 +61,13 @@ async def closeLights():
 
 async def main():
     while True:
-        await entrance()
-        await admin()
+        await entranceDoor()
+        await adminDoor()
         await fire()
         await motion()
+        await closeLights()
+        await openCamera()
+        await sleep(1)
 
 if __name__ == "__main__":
     import asyncio
