@@ -54,7 +54,7 @@ def main():
         elif parsed[0] == "SMOKE":
             _, smoke = parsed
             print(f"Smoke Level: {smoke}")
-            publisher.publish("office/smoke", smoke)
+#            publisher.publish("office/smoke", smoke)
             if smoke >= 70:
                 print("Fire alert!")
 
