@@ -21,7 +21,8 @@ def openCamera():
 
 def entranceDoor():
     while True:
-        if recognized or localtime().tm_hour < 15 or mainNFC:
+        #if recognized or localtime().tm_hour < 15 or mainNFC:
+        if mainNFC:
             entranceOpen()
             lightMain.on()
         sleep(1)
