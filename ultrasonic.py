@@ -7,13 +7,22 @@ def is_person_nearby():
     return distance < 50  # Threshold distance in cm
 
 if __name__ == "__main__":
-    from pub import publisher
-    import time
-    while True:
+    import nfc, threading, time
+    def ultra():
         if is_person_nearby():
             print("Person detected nearby!")
-            publisher.publish("office/cvOpen", "1")
         else:
-            print("No one nearby.")
-            publisher.publish("office/cvOpen", "0")
+            print("No person nearby.")
+    
+    threads = [
+        threading.Thread(target=ultra, daemon=True),
+        threading.Thread(target=nfc.nfcOn, daemon=True)
+    ]
+    
+    # Start all threads
+    for thread in threads:
+        thread.start()
+    
+    # Keep the main thread running
+    while True:
         time.sleep(1)

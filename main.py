@@ -10,66 +10,77 @@ from button import mainDoor, adminDoor
 from ultrasonic import is_person_nearby
 from nfc import mainNFC, adminNFC
 from pub import publisher
+import threading
 
-async def openCamera():
-    if is_person_nearby():
-        publisher.publish("office/cvOpen", "1")
-        await sleep(0)
-    else:
-        await sleep(0)
-
-async def entranceDoor():
-    if recognized and localtime().tm_hour < 15 and mainNFC:
-        entranceOpen()
-        lightMain.on()
-        await sleep(0)
-
-async def adminDoor():
-    if adminNFC and localtime().tm_hour < 15:
-        adminOpen()
-        lightAdmin.on()
-        await sleep(0)
-
-async def fire():
-    if isFire():
-        waterPump.on()
-        entrance.min()
-        admin.min()
-        buzz_on()
-        await sleep(0)
-    else:
-        waterPump.off()
-        entrance.max()
-        admin.max()
-        buzz_off()
-        await sleep(0)
-
-async def motion():
-    if pir.motion_detected and localtime().tm_hour >= 15:
-        entrance.max()
-        admin.max()
-        buzz_on()
-        await sleep(0)
-
-async def closeLights():
-    if mainDoor.is_pressed:
-        lightMain.off()
-        lightAdmin.off()
-        await sleep(0)
-    if adminDoor.is_pressed:
-        lightAdmin.off()
-        await sleep(0)
-
-async def main():
+def openCamera():
     while True:
-        await entranceDoor()
-        await adminDoor()
-        await fire()
-        await motion()
-        await closeLights()
-        await openCamera()
-        await sleep(1)
+        if is_person_nearby():
+            publisher.publish("office/cvOpen", "1")
+        sleep(1)
+
+def entranceDoor():
+    while True:
+        if recognized and localtime().tm_hour < 15 and mainNFC:
+            entranceOpen()
+            lightMain.on()
+        sleep(1)
+
+def adminDoor():
+    while True:
+        if adminNFC and localtime().tm_hour < 15:
+            adminOpen()
+            lightAdmin.on()
+        sleep(1)
+
+def fire():
+    while True:
+        if isFire():
+            waterPump.on()
+            entrance.min()
+            admin.min()
+            buzz_on()
+        else:
+            waterPump.off()
+            entrance.max()
+            admin.max()
+            buzz_off()
+        sleep(1)
+
+def motion():
+    while True:
+        if pir.motion_detected and localtime().tm_hour >= 15:
+            entrance.max()
+            admin.max()
+            buzz_on()
+        sleep(1)
+
+def closeLights():
+    while True:
+        if mainDoor.is_pressed:
+            lightMain.off()
+            lightAdmin.off()
+        if adminDoor.is_pressed:
+            lightAdmin.off()
+        sleep(1)
+
+def main():
+    # Create threads for each task
+    threads = [
+        threading.Thread(target=openCamera, daemon=True),
+        threading.Thread(target=entranceDoor, daemon=True),
+        threading.Thread(target=adminDoor, daemon=True),
+        threading.Thread(target=fire, daemon=True),
+        threading.Thread(target=motion, daemon=True),
+        threading.Thread(target=closeLights, daemon=True)
+    ]
+    
+    # Start all threads
+    for thread in threads:
+        thread.start()
+    
+    # Keep the main thread running
+    while True:
+        sleep(1)
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    main()

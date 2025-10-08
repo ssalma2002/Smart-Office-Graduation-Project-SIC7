@@ -2,7 +2,6 @@ import board
 import busio
 from adafruit_pn532.i2c import PN532_I2C
 from time import sleep
-import asyncio
 # Initialize PN532
 i2c = busio.I2C(board.SCL, board.SDA)
 pn532 = PN532_I2C(i2c, debug=False)
@@ -24,7 +23,7 @@ def resetNFC():
     mainNFC = False
     adminNFC = False
 
-async def nfcOn():
+def nfcOn():
     while True:
         uid = pn532.read_passive_target(timeout=0.5)
         if uid is None:
@@ -45,5 +44,5 @@ async def nfcOn():
         else:
             print("Access Denied")
         resetNFC()
-        await asyncio.sleep(1)
+        sleep(1)
 
