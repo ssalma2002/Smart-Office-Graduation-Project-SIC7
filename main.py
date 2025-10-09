@@ -5,7 +5,7 @@ from smoke import isFire
 from waterPump import pump
 from buzzer import buzz_on, buzz_off
 import facerecognition
-from light import lightMain, lightAdmin
+from light import lightMain, lightAdmin, roomsON
 from button import mainDoor, adminDoors
 from ultrasonic import is_person_nearby
 import nfc
@@ -45,7 +45,7 @@ def fire():
 
 def exitHandler():
     adminDoors.when_pressed = lambda: lightAdmin.off()
-    mainDoor.when_pressed = lambda: lightMain.off(), lightAdmin.off()
+    mainDoor.when_pressed = lambda: lightMain.off(), lightAdmin.off(), entranceOpen()
 
 def main():
     # Create threads for each task
@@ -55,7 +55,8 @@ def main():
         threading.Thread(target=adminDoor, daemon=True),
         threading.Thread(target=fire, daemon=True),
         threading.Thread(target=exitHandler, daemon=True),
-        threading.Thread(target=nfc.nfcOn, daemon=True)
+        threading.Thread(target=nfc.nfcOn, daemon=True),
+        threading.Thread(target=roomsON, daemon=True)
     ]
 
     # Start all threads

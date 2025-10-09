@@ -48,16 +48,13 @@ def isFire():
         if parsed[0] == "DHT":
             _, temp, hum = parsed
             print(f"Temperature: {temp}°C, Humidity: {hum}%")
-            publisher.publish("temperatureIn", temp)
-            publisher.publish("humidity", hum)
+            publisher.publish("office/temperature", temp)
+            publisher.publish("office/humidity", hum)
 
         elif parsed[0] == "SMOKE":
             _, smoke = parsed
             print(f"Smoke Level: {smoke}")
-            publisher.publish("airquality", smoke)
+            publisher.publish("office/airquality", smoke)
             if smoke >= 70:
                 print("Fire alert!")
 
-
-if __name__ == "__main__":
-    main()
