@@ -33,6 +33,22 @@ def roomsON():
     ret3 = room3.subscribe("office/room3")
     room3.loop_start()
 
+    def MainOn(client, userdata, message):
+        lightMain.on() if str(message.payload.decode("utf-8")) == "1" else lightMain.off()
+    hall = Client(client_id='subHall')
+    hall.on_message = MainOn
+    hall.connect("127.0.0.1", 1883, 60)
+    retHall = hall.subscribe("office/hall")
+    hall.loop_start()
+
+    def AdminOn(client, userdata, message):
+        lightAdmin.on() if str(message.payload.decode("utf-8")) == "1" else lightAdmin.off()
+    admin = Client(client_id='subAdmin')
+    admin.on_message = AdminOn
+    admin.connect("127.0.0.1", 1883, 60)
+    retAdmin = admin.subscribe("office/admin")
+    admin.loop_start()
+
 
     while True:
         sleep(1)
